@@ -69,36 +69,36 @@ def master_or_manager_required(current_user=Depends(get_current_user)):
 
 @api.post("/create_default_users", status_code=201)
 def create_default_users():
-    emails = ["manager@example.com", "master@example.com", "user@example.com"]
+    emails = ["manager@gmail.com", "master@gmail.com", "user@gmail.com"]
     for email in emails:
         if Users.get_by_email(email):
             raise HTTPException(409, f"User with email {email} already exists")
 
     manager_data = {
-        "email": "manager@example.com",
+        "email": "manager@gmail.com",
         "first_name": "Manager",
         "last_name": "Admin",
-        "password": "string",
+        "password": "manager",
         "role": "manager",
         "person_type": "individual"
     }
     manager_id, _ = Users.create(manager_data)
 
     master_data = {
-        "email": "master@example.com",
+        "email": "master@gmail.com",
         "first_name": "Master",
         "last_name": "User",
-        "password": "string",
+        "password": "master",
         "role": "master",
         "person_type": "individual"
     }
     master_id, _ = Users.create(master_data)
 
     user_data = {
-        "email": "user@example.com",
+        "email": "user@gmail.com",
         "first_name": "Normal",
         "last_name": "User",
-        "password": "string",
+        "password": "user",
         "role": "user",
         "person_type": "individual"
     }
