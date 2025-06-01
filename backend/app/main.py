@@ -181,7 +181,7 @@ def update_user(data_in: UserUpdate, current_user=Depends(get_current_user)):
     user_data = data_in.model_dump(exclude_unset=True)
 
     if data_in.password and data_in.password != "":
-        data_in.password = Users.hash_password(data_in.password)
+        user_data["password"] = Users.hash_password(data_in.password)
     else:
         del user_data["password"]
     Users.update(current_user["_id"], user_data)
