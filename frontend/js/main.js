@@ -1,15 +1,15 @@
-// Main application logic for index.html
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Main.js loaded")
 
-  // Check if user is already logged in
+  
   if (window.auth.isAuthenticated()) {
     console.log("User is authenticated, redirecting to dashboard")
     window.location.href = "dashboard.html"
     return
   }
 
-  // Login form handler
+  
   const loginForm = document.getElementById("loginForm")
   if (loginForm) {
     console.log("Login form found, adding event listener")
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const submitButton = this.querySelector('button[type="submit"]')
       const originalText = submitButton.innerHTML
 
-      // Show loading state
+      
       submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Kirish...'
       submitButton.disabled = true
 
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Login form error:", error)
         window.ui.showToast("Kutilmagan xatolik yuz berdi", "error")
       } finally {
-        // Restore button state
+        
         submitButton.innerHTML = originalText
         submitButton.disabled = false
       }
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Login form not found!")
   }
 
-  // Register form handler
+  
   const registerForm = document.getElementById("registerForm")
   if (registerForm) {
     console.log("Register form found, adding event listener")
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const submitButton = this.querySelector('button[type="submit"]')
       const originalText = submitButton.innerHTML
 
-      // Show loading state
+      
       submitButton.innerHTML = "<i class=\"fas fa-spinner fa-spin mr-2\"></i>Ro'yxatdan o'tish..."
       submitButton.disabled = true
 
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Register form error:", error)
         window.ui.showToast("Kutilmagan xatolik yuz berdi", "error")
       } finally {
-        // Restore button state
+        
         submitButton.innerHTML = originalText
         submitButton.disabled = false
       }
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Register form not found!")
   }
 
-  // Quick request form handler
+  
   let currentStep = 1
   let userInfoData = {}
 
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const submitButton = this.querySelector('button[type="submit"]')
       const originalText = submitButton.innerHTML
 
-      // Show loading state
+      
       submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Yuborilmoqda...'
       submitButton.disabled = true
 
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
           window.ui.showToast("So'rov muvaffaqiyatli yuborildi!")
           window.ui.closeModal("quickRequestModal")
 
-          // Reset form and step
+          
           resetQuickRequestForm()
 
           if (window.auth.isAuthenticated()) {
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Quick request error:", error)
         window.ui.showToast("Tarmoq xatosi yoki server ishlamayapti", "error")
       } finally {
-        // Restore button state
+        
         submitButton.innerHTML = originalText
         submitButton.disabled = false
       }
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userInfoData = {}
   }
 
-  // Make functions global for HTML onclick handlers
+  
   window.nextStep = () => {
     const userInfoForm = document.getElementById("userInfoForm")
     const formData = window.ui.getFormData(userInfoForm)
@@ -208,13 +208,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     userInfoData = formData
 
-    // Update step indicators
+    
     document.getElementById("step1Indicator").className =
       "w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg"
     document.getElementById("step2Indicator").className =
       "w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg"
 
-    // Show/hide steps
+    
     document.getElementById("step1").classList.add("hidden")
     document.getElementById("step2").classList.remove("hidden")
 
@@ -222,20 +222,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.prevStep = () => {
-    // Update step indicators
+    
     document.getElementById("step1Indicator").className =
       "w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg"
     document.getElementById("step2Indicator").className =
       "w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium"
 
-    // Show/hide steps
+    
     document.getElementById("step1").classList.remove("hidden")
     document.getElementById("step2").classList.add("hidden")
 
     currentStep = 1
   }
 
-  // Close modals when clicking outside
+  
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("fixed") && e.target.classList.contains("inset-0")) {
       const modals = ["loginModal", "registerModal", "quickRequestModal"]

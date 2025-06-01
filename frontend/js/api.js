@@ -1,11 +1,11 @@
-const API_BASE_URL = "http://127.0.0.1:8000"
+const API_BASE_URL = "https://anasxon.robohouse.tech/api"
 
-// API Helper Functions
+
 const api = {
-  // Helper function to make API calls
+  
   async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`
-    console.log("API Request:", url, options) // Debug log
+    console.log("API Request:", url, options) 
 
     const config = {
       headers: {
@@ -23,9 +23,9 @@ const api = {
 
     try {
       const response = await fetch(url, config)
-      console.log("API Response:", response.status, response.statusText) // Debug log
+      console.log("API Response:", response.status, response.statusText) 
 
-      // Handle 401 errors by trying to refresh token
+      
       if (response.status === 401 && accessToken) {
         console.log("Token expired, trying to refresh...")
         const refreshed = await this.refreshToken()
@@ -43,12 +43,12 @@ const api = {
       return response
     } catch (error) {
       console.error("API request failed:", error)
-      // Fallback to mock data if API is not available
+      
       return this.getMockResponse(endpoint, options)
     }
   },
 
-  // Authentication endpoints
+  
   async login(email, password) {
     console.log("API login called with:", email)
     const response = await this.request("/login", {
@@ -90,7 +90,7 @@ const api = {
     return response
   },
 
-  // Support request endpoints
+  
   async createSupportRequest(requestData) {
     const response = await this.request("/support_request", {
       method: "POST",
@@ -136,7 +136,7 @@ const api = {
     return response
   },
 
-  // User management endpoints
+  
   async getUsers() {
     const response = await this.request("/users")
     return response
@@ -166,7 +166,7 @@ const api = {
     return response
   },
 
-  // Components endpoints
+  
   async getComponents() {
     const response = await this.request("/components")
     return response
@@ -203,7 +203,7 @@ const api = {
     return response
   },
 
-  // Temporary mock responses for development
+  
   getMockResponse(endpoint, options) {
     console.log("Using mock data for:", endpoint)
 
@@ -218,7 +218,7 @@ const api = {
               first_name: "Test",
               last_name: "User",
               email: "test@example.com",
-              role: "master", // Changed to master for testing
+              role: "master", 
             },
           }),
       })
@@ -234,7 +234,7 @@ const api = {
             last_name: "Master",
             email: "master@example.com",
             phone: "+998901234567",
-            role: "master", // Changed to master for testing
+            role: "master", 
           }),
       })
     }
@@ -335,7 +335,7 @@ const api = {
       return Promise.resolve({ ok: true })
     }
 
-    // Default empty response
+    
     return Promise.resolve({
       ok: false,
       status: 404,
@@ -344,5 +344,5 @@ const api = {
   },
 }
 
-// Make api available globally
+
 window.api = api

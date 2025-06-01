@@ -1,4 +1,4 @@
-// Authentication management
+
 const auth = {
   currentUser: null,
 
@@ -14,12 +14,12 @@ const auth = {
 
         localStorage.setItem("access_token", data.access_token)
 
-        // If user data is included in login response
+        
         if (data.user) {
           this.currentUser = data.user
           localStorage.setItem("currentUser", JSON.stringify(this.currentUser))
         } else {
-          // Get user info separately
+          
           await this.loadCurrentUser()
         }
 
@@ -45,7 +45,7 @@ const auth = {
         const data = await response.json()
         console.log("Register data:", data)
 
-        // Auto login if token is provided
+        
         if (data.access_token) {
           localStorage.setItem("access_token", data.access_token)
           if (data.user) {
@@ -72,7 +72,7 @@ const auth = {
   async loadCurrentUser() {
     console.log("Loading current user...")
     try {
-      // First check localStorage
+      
       const savedUser = localStorage.getItem("currentUser")
       if (savedUser) {
         this.currentUser = JSON.parse(savedUser)
@@ -80,7 +80,7 @@ const auth = {
         return this.currentUser
       }
 
-      // Then try API
+      
       const response = await window.api.getCurrentUser()
       console.log("Get current user response:", response)
 
@@ -122,5 +122,5 @@ const auth = {
   },
 }
 
-// Make auth available globally
+
 window.auth = auth

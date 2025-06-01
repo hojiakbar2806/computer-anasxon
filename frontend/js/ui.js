@@ -1,6 +1,6 @@
-// UI Helper Functions
+
 const ui = {
-  // Modal management
+  
   openModal(modalId) {
     const modal = document.getElementById(modalId)
     if (modal) {
@@ -15,7 +15,7 @@ const ui = {
     }
   },
 
-  // Toast notifications
+  
   showToast(message, type = "success") {
     const toast = document.getElementById("toast")
     const toastMessage = document.getElementById("toastMessage")
@@ -23,21 +23,21 @@ const ui = {
     if (toast && toastMessage) {
       toastMessage.textContent = message
 
-      // Set toast color based on type
+      
       toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
         type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : "bg-blue-500"
       } text-white`
 
       toast.classList.remove("hidden")
 
-      // Auto hide after 3 seconds
+      
       setTimeout(() => {
         toast.classList.add("hidden")
       }, 3000)
     }
   },
 
-  // Form helpers
+  
   getFormData(formElement) {
     const formData = new FormData(formElement)
     const data = {}
@@ -59,7 +59,7 @@ const ui = {
     }
   },
 
-  // Status badge helper
+  
   getStatusBadge(status) {
     const statusClasses = {
       pending: "bg-yellow-100 text-yellow-800",
@@ -85,7 +85,7 @@ const ui = {
     return `<span class="px-2 py-1 text-xs font-medium rounded-full ${className}">${text}</span>`
   },
 
-  // Issue type icon helper
+  
   getIssueTypeIcon(issueType) {
     const icons = {
       hardware: "fas fa-laptop",
@@ -97,7 +97,7 @@ const ui = {
   },
 }
 
-// Global functions for HTML onclick handlers
+
 function openModal(modalId) {
   ui.openModal(modalId)
 }
@@ -123,7 +123,7 @@ function toggleCompanyField(personType) {
   }
 }
 
-// Quick request modal step management
+
 let currentStep = 1
 let userInfoData = {}
 
@@ -131,7 +131,7 @@ function nextStep() {
   const userInfoForm = document.getElementById("userInfoForm")
   const formData = ui.getFormData(userInfoForm)
 
-  // Validate form
+  
   if (!formData.full_name || !formData.email || !formData.phone) {
     ui.showToast("Barcha maydonlarni to'ldiring", "error")
     return
@@ -139,13 +139,13 @@ function nextStep() {
 
   userInfoData = formData
 
-  // Update step indicators
+  
   document.getElementById("step1Indicator").className =
     "w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium"
   document.getElementById("step2Indicator").className =
     "w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium"
 
-  // Show/hide steps
+  
   document.getElementById("step1").classList.add("hidden")
   document.getElementById("step2").classList.remove("hidden")
 
@@ -153,18 +153,18 @@ function nextStep() {
 }
 
 function prevStep() {
-  // Update step indicators
+  
   document.getElementById("step1Indicator").className =
     "w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium"
   document.getElementById("step2Indicator").className =
     "w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium"
 
-  // Show/hide steps
+  
   document.getElementById("step1").classList.remove("hidden")
   document.getElementById("step2").classList.add("hidden")
 
   currentStep = 1
 }
 
-// Make ui available globally
+
 window.ui = ui
