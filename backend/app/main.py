@@ -307,3 +307,6 @@ def update_component(component_id: str, data_in: ComponentsUpdate):
 def delete_component(component_id: str):
     Components.delete(component_id)
     return {"message": "Extiyot qism o'chirildi"}
+
+
+app.include_router(api)
