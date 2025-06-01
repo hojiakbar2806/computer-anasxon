@@ -1,5 +1,5 @@
 from bson import ObjectId
-from typing import Literal, List
+from typing import Literal
 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -8,9 +8,9 @@ from fastapi import FastAPI, HTTPException, Response, APIRouter, Depends, Body, 
 from app.database.models.user import Users
 from app.database.models.request import SupportRequests
 from app.database.models.componets import Components
-from app.schemas.components import ComponentsRequest, ComponentsResponse, ComponentsUpdate
+from app.schemas.components import ComponentsRequest, ComponentsUpdate
 from app.schemas.request import SupportRequestCreate, SupportRequestWithUserCreate, SupportRequestEdited
-from app.schemas.auth import UserRegister, UserLogin, UserOut
+from app.schemas.auth import UserRegister, UserLogin
 from app.schemas.user import UserRequest, UserUpdate
 from app.core.auth import create_access_token, create_refresh_token, verify_token
 
@@ -39,7 +39,6 @@ def get_current_user(auth: HTTPAuthorizationCredentials = Depends(oauth2_scheme)
     payload = verify_token(auth.credentials)
     if not payload:
         raise HTTPException(401, "Invalid token")
-    print("---------------------------------------", payload.get('sub'))
     user = Users.get_by_id(payload.get('sub'))
     if not user:
         raise HTTPException(404, "Foydalanuvchi topilmadi")
@@ -179,9 +178,13 @@ def update_user(data_in: UserUpdate, current_user=Depends(get_current_user)):
     existing_user = Users.get_by_id(current_user["_id"])
     if not existing_user:
         raise HTTPException(404, "Foydalanuvchi topilmadi")
+    user_data = data_in.model_dump(exclude_unset=True)
+
     if data_in.password and data_in.password != "":
         data_in.password = Users.hash_password(data_in.password)
-    Users.update(current_user["_id"], data_in.model_dump(exclude_unset=True))
+    else:
+        del user_data["password"]
+    Users.update(current_user["_id"], user_data)
     return {"message": "User updated successfully"}
 
 
