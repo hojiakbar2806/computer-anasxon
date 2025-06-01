@@ -179,7 +179,7 @@ def update_user(data_in: UserUpdate, current_user=Depends(get_current_user)):
     existing_user = Users.get_by_id(current_user["_id"])
     if not existing_user:
         raise HTTPException(404, "Foydalanuvchi topilmadi")
-    if data_in.password:
+    if data_in.password and data_in.password != "":
         data_in.password = Users.hash_password(data_in.password)
     Users.update(current_user["_id"], data_in.model_dump(exclude_unset=True))
     return {"message": "User updated successfully"}
