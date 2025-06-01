@@ -6,6 +6,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import FastAPI, HTTPException, Response, APIRouter, Depends, Body, Cookie
 
 from app.database.models.user import Users
+from app.utils.send_password import send_password
 from app.database.models.request import SupportRequests
 from app.database.models.componets import Components
 from app.schemas.components import ComponentsRequest, ComponentsUpdate
@@ -230,7 +231,8 @@ def create_request_with_user(data_in: SupportRequestWithUserCreate):
     user_id, random_password = Users.create(user_data)
     request_data["owner_id"] = ObjectId(user_id)
     SupportRequests.create(request_data)
-    return {"user_id": str(user_id), "password": random_password}
+    send_password(user_data['email'], random_password)
+    return {"user_id": str(user_id)}
 
 
 @api.get("/support_request", summary="Support requestlarni ro'yxatini olish")
