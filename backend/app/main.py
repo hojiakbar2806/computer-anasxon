@@ -3,7 +3,7 @@ from typing import Literal, List
 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi import FastAPI, HTTPException, Response, Depends, Body, Cookie
+from fastapi import FastAPI, HTTPException, Response, APIRouter, Depends, Body, Cookie
 
 from app.database.models.user import Users
 from app.database.models.request import SupportRequests
@@ -14,7 +14,15 @@ from app.schemas.auth import UserRegister, UserLogin, UserOut
 from app.schemas.user import UserRequest, UserUpdate
 from app.core.auth import create_access_token, create_refresh_token, verify_token
 
-app = FastAPI()
+app = FastAPI(
+    openapi_url="/api/openapi.json",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+)
+
+api = APIRouter(prefix="/api")
+
+
 oauth2_scheme = HTTPBearer()
 
 app.add_middleware(
@@ -59,7 +67,7 @@ def master_or_manager_required(current_user=Depends(get_current_user)):
     return current_user
 
 
-@app.post("/create_default_users", status_code=201)
+@api.post("/create_default_users", status_code=201)
 def create_default_users():
     emails = ["manager@example.com", "master@example.com", "user@example.com"]
     for email in emails:
@@ -104,7 +112,7 @@ def create_default_users():
     }
 
 
-@app.post("/register", summary="Ro'yxatdan o'tish")
+@api.post("/register", summary="Ro'yxatdan o'tish")
 def register(user: UserRegister, response: Response):
     if user.person_type == "legal" and not user.company_name:
         raise HTTPException(400, "Komapany nomini kiriting")
@@ -121,7 +129,7 @@ def register(user: UserRegister, response: Response):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/login", summary="Login qilish")
+@api.post("/login", summary="Login qilish")
 def login(user: UserLogin, response: Response):
     db_user = Users.get_by_email(user.email)
     if not db_user or not Users.verify_password(user.password, db_user["password"]):
@@ -135,7 +143,7 @@ def login(user: UserLogin, response: Response):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/refresh", summary="Access tokenni yangilash")
+@api.post("/refresh", summary="Access tokenni yangilash")
 def refresh_token(refresh_token: str = Cookie(None)):
     if not refresh_token:
         raise HTTPException(401, "Token yo'q")
@@ -148,17 +156,17 @@ def refresh_token(refresh_token: str = Cookie(None)):
     return {"access_token": new_access_token, "token_type": "bearer"}
 
 
-@app.get("/me",  summary="Hozirgi foydalanuvchi ma'lumotlari")
+@api.get("/me",  summary="Hozirgi foydalanuvchi ma'lumotlari")
 def me(current_user=Depends(get_current_user)):
     return current_user
 
 
-@app.get("/users", dependencies=[Depends(manager_required)], summary="Foydalanuvchilar ro'yxati (manager uchun)")
+@api.get("/users", dependencies=[Depends(manager_required)], summary="Foydalanuvchilar ro'yxati (manager uchun)")
 def list_users():
     return Users.get_all()
 
 
-@app.post("/users",  dependencies=[Depends(manager_required)], summary="Foydalanuvchi yaratish (manager uchun)")
+@api.post("/users",  dependencies=[Depends(manager_required)], summary="Foydalanuvchi yaratish (manager uchun)")
 def create_user(data_in: UserRequest):
     if Users.get_by_email(data_in.email):
         raise HTTPException(409, "Bunday foydalanuvchi mavjud")
@@ -166,7 +174,7 @@ def create_user(data_in: UserRequest):
     return Users.get_by_id(str(user_id))
 
 
-@app.patch("/user")
+@api.patch("/user")
 def update_user(data_in: UserUpdate, current_user=Depends(get_current_user)):
     existing_user = Users.get_by_id(current_user["_id"])
     if not existing_user:
@@ -177,7 +185,7 @@ def update_user(data_in: UserUpdate, current_user=Depends(get_current_user)):
     return {"message": "User updated successfully"}
 
 
-@app.patch("/users/{user_id}", dependencies=[Depends(manager_required)], summary="Foydalanuvchini tahrirlash (manager uchun)")
+@api.patch("/users/{user_id}", dependencies=[Depends(manager_required)], summary="Foydalanuvchini tahrirlash (manager uchun)")
 def update_user(user_id: str, data_in: UserUpdate):
     existing_user = Users.get_by_id(user_id)
     if not existing_user:
@@ -186,7 +194,7 @@ def update_user(user_id: str, data_in: UserUpdate):
     return {"message": "User updated successfully"}
 
 
-@app.delete("/users/{user_id}", dependencies=[Depends(manager_required)], summary="Foydalanuvchini o'chirish (manager uchun)")
+@api.delete("/users/{user_id}", dependencies=[Depends(manager_required)], summary="Foydalanuvchini o'chirish (manager uchun)")
 def delete_user(user_id: str):
     existing_user = Users.get_by_id(user_id)
     if not existing_user:
@@ -195,7 +203,7 @@ def delete_user(user_id: str):
     return {"message": "User deleted successfully"}
 
 
-@app.post("/support_request", summary="Support request yaratish")
+@api.post("/support_request", summary="Support request yaratish")
 def create_request(request: SupportRequestCreate, current_user=Depends(get_current_user)):
     data = request.model_dump()
     owner_id = current_user["_id"]
@@ -203,7 +211,7 @@ def create_request(request: SupportRequestCreate, current_user=Depends(get_curre
     return SupportRequests.create(data)
 
 
-@app.post("/support_request_with_user", summary="Support request va user yaratish birga")
+@api.post("/support_request_with_user", summary="Support request va user yaratish birga")
 def create_request_with_user(data_in: SupportRequestWithUserCreate):
     request_data = data_in.request.model_dump()
     user_data = data_in.user.model_dump()
@@ -222,7 +230,7 @@ def create_request_with_user(data_in: SupportRequestWithUserCreate):
     return {"user_id": str(user_id), "password": random_password}
 
 
-@app.get("/support_request", summary="Support requestlarni ro'yxatini olish")
+@api.get("/support_request", summary="Support requestlarni ro'yxatini olish")
 def list_requests(current_user=Depends(get_current_user)):
     if current_user["role"] == "manager":
         filter = {}
@@ -237,12 +245,12 @@ def list_requests(current_user=Depends(get_current_user)):
     return requests
 
 
-@app.put("/support_request/status/{request_id}", summary="Support request statusini yangilash")
+@api.put("/support_request/status/{request_id}", summary="Support request statusini yangilash")
 def update_support_status(request_id: str, status: Literal['checked', 'approved', 'in_progress', 'rejected', 'completed'] = Body(...)):
     return SupportRequests.update(request_id, {"status": status})
 
 
-@app.post("/support_request/send_master/{request_id}", summary="Support requestga master tayinlash (manager uchun)")
+@api.post("/support_request/send_master/{request_id}", summary="Support requestga master tayinlash (manager uchun)")
 def send_support_master(request_id: str, current_user=Depends(get_current_user)):
     if current_user["role"] != "manager":
         raise HTTPException(403, "Ruxsat yo'q")
@@ -254,7 +262,7 @@ def send_support_master(request_id: str, current_user=Depends(get_current_user))
     return {"message": "Master assigned successfully"}
 
 
-@app.patch("/support_request/master/{request_id}", summary="Support requestni master tomonidan yangilash")
+@api.patch("/support_request/master/{request_id}", summary="Support requestni master tomonidan yangilash")
 def update_support_master(request_id: str, data_in: SupportRequestEdited, current_user=Depends(get_current_user)):
     if current_user["role"] != "master":
         raise HTTPException(403, "Ruxsat yo'q")
@@ -272,12 +280,12 @@ def update_support_master(request_id: str, data_in: SupportRequestEdited, curren
     })
 
 
-@app.post("/components", dependencies=[Depends(master_or_manager_required)], summary="Component yaratish (manager uchun)")
+@api.post("/components", dependencies=[Depends(master_or_manager_required)], summary="Component yaratish (manager uchun)")
 def create_component(data_in: ComponentsRequest):
     return Components.create(data_in.model_dump())
 
 
-@app.get("/components/{component_id}", dependencies=[Depends(master_or_manager_required)], summary="Componentni olish (master uchun)")
+@api.get("/components/{component_id}", dependencies=[Depends(master_or_manager_required)], summary="Componentni olish (master uchun)")
 def get_component(component_id: str):
     component = Components.get_by_id(component_id)
     if not component:
@@ -285,17 +293,17 @@ def get_component(component_id: str):
     return component
 
 
-@app.get("/components", dependencies=[Depends(master_or_manager_required)], summary="Componentlar ro'yxati (master uchun)")
+@api.get("/components", dependencies=[Depends(master_or_manager_required)], summary="Componentlar ro'yxati (master uchun)")
 def list_components():
     return Components.list()
 
 
-@app.patch("/components/{component_id}", dependencies=[Depends(master_or_manager_required)], summary="Componentni yangilash (manager uchun)")
+@api.patch("/components/{component_id}", dependencies=[Depends(master_or_manager_required)], summary="Componentni yangilash (manager uchun)")
 def update_component(component_id: str, data_in: ComponentsUpdate):
     return Components.update(component_id, data_in.model_dump())
 
 
-@app.delete("/components/{component_id}", dependencies=[Depends(master_or_manager_required)], summary="Componentni o'chirish (manager uchun)")
+@api.delete("/components/{component_id}", dependencies=[Depends(master_or_manager_required)], summary="Componentni o'chirish (manager uchun)")
 def delete_component(component_id: str):
     Components.delete(component_id)
     return {"message": "Extiyot qism o'chirildi"}
