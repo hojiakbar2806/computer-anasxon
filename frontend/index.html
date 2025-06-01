@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSupport Pro - Professional IT Support Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'bounce-slow': 'bounce 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-2 rounded-xl">
+                        <i class="fas fa-tools text-white text-xl sm:text-2xl"></i>
+                    </div>
+                    <div>
+                        <span
+                            class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">TechSupport
+                            Pro</span>
+                        <p class="text-xs text-gray-500 hidden sm:block">Professional IT Solutions</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <button onclick="openModal('loginModal')"
+                        class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 hover:bg-blue-50">
+                        <i class="fas fa-sign-in-alt mr-1 sm:mr-2"></i>
+                        <span class="hidden sm:inline">Kirish</span>
+                    </button>
+                    <button onclick="openModal('registerModal')"
+                        class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fas fa-user-plus mr-1 sm:mr-2"></i>
+                        <span class="hidden sm:inline">Ro'yxatdan o'tish</span>
+                        <span class="sm:hidden">Ro'yxat</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800"></div>
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+            <div class="text-center animate-fade-in">
+                <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Professional IT Support
+                    <span class="block text-blue-200">Services</span>
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                    Tez va ishonchli texnik yordam xizmatlari. Har qanday IT muammolaringizni professional darajada hal
+                    qilamiz.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button onclick="openModal('quickRequestModal')"
+                        class="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 w-full sm:w-auto">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Tez so'rov yuborish
+                    </button>
+                    <button onclick="document.getElementById('services').scrollIntoView({behavior: 'smooth'})"
+                        class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 w-full sm:w-auto">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Xizmatlar haqida
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-blue-400/20 rounded-full animate-bounce-slow"></div>
+        <div class="absolute bottom-20 right-10 w-16 h-16 bg-blue-300/20 rounded-full animate-bounce-slow"
+            style="animation-delay: 1s;"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 sm:py-20 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 animate-slide-up">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+                    Bizning xizmatlarimiz
+                </h2>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+                    Har qanday texnik muammolaringizni professional darajada hal qilamiz
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div
+                    class="group text-center p-6 sm:p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div
+                        class="bg-gradient-to-r from-blue-500 to-blue-600 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-laptop text-2xl sm:text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-900">Hardware</h3>
+                    <p class="text-gray-600 leading-relaxed">Kompyuter va qurilmalar ta'miri, diagnostika va yangilash
+                        xizmatlari</p>
+                </div>
+                <div
+                    class="group text-center p-6 sm:p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div
+                        class="bg-gradient-to-r from-green-500 to-green-600 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-code text-2xl sm:text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-900">Software</h3>
+                    <p class="text-gray-600 leading-relaxed">Dasturiy ta'minot o'rnatish, sozlash va muammolarni hal
+                        qilish</p>
+                </div>
+                <div
+                    class="group text-center p-6 sm:p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div
+                        class="bg-gradient-to-r from-purple-500 to-purple-600 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-wifi text-2xl sm:text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-900">Network</h3>
+                    <p class="text-gray-600 leading-relaxed">Tarmoq va internet ulanish muammolarini tuzatish</p>
+                </div>
+                <div
+                    class="group text-center p-6 sm:p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                    <div
+                        class="bg-gradient-to-r from-orange-500 to-orange-600 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-cog text-2xl sm:text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-900">Boshqa</h3>
+                    <p class="text-gray-600 leading-relaxed">Har qanday boshqa texnik yordam va maslahat xizmatlari</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-gradient-to-r from-gray-50 to-blue-50 py-16 sm:py-20 lg:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+                    Nima uchun bizni tanlaysiz?
+                </h2>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+                    Bizning afzalliklarimiz va professional yondashuvimiz
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
+                <div class="text-center group">
+                    <div
+                        class="bg-gradient-to-r from-blue-500 to-blue-600 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-clock text-3xl sm:text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-900">24/7 Xizmat</h3>
+                    <p class="text-gray-600 leading-relaxed">Har doim sizning xizmatingizdamiz. Tez javob va
+                        professional yordam</p>
+                </div>
+                <div class="text-center group">
+                    <div
+                        class="bg-gradient-to-r from-green-500 to-green-600 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-users text-3xl sm:text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-900">Professional jamoa</h3>
+                    <p class="text-gray-600 leading-relaxed">Tajribali mutaxassislar va sertifikatlangan texniklar</p>
+                </div>
+                <div class="text-center group">
+                    <div
+                        class="bg-gradient-to-r from-purple-500 to-purple-600 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-shield-alt text-3xl sm:text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-900">Kafolat</h3>
+                    <p class="text-gray-600 leading-relaxed">Ishlarimizga to'liq kafolat va mijozlar qoniqishi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 sm:py-20 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Bizning natijalarimiz</h2>
+                <p class="text-lg sm:text-xl text-gray-600">Raqamlarda ko'rsatilgan muvaffaqiyat</p>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl">
+                    <div class="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">500+</div>
+                    <div class="text-gray-700 font-medium">Mamnun mijozlar</div>
+                </div>
+                <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl">
+                    <div class="text-3xl sm:text-4xl font-bold text-green-600 mb-2">1000+</div>
+                    <div class="text-gray-700 font-medium">Hal qilingan muammolar</div>
+                </div>
+                <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl">
+                    <div class="text-3xl sm:text-4xl font-bold text-purple-600 mb-2">24/7</div>
+                    <div class="text-gray-700 font-medium">Xizmat vaqti</div>
+                </div>
+                <div class="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl">
+                    <div class="text-3xl sm:text-4xl font-bold text-orange-600 mb-2">98%</div>
+                    <div class="text-gray-700 font-medium">Muvaffaqiyat darajasi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 py-16 sm:py-20">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
+                Texnik yordam kerakmi?
+            </h2>
+            <p class="text-lg sm:text-xl text-blue-100 mb-8 leading-relaxed">
+                Bizning professional jamoamiz sizga yordam berishga tayyor. Hoziroq bog'laning!
+            </p>
+            <button onclick="openModal('quickRequestModal')"
+                class="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1">
+                <i class="fas fa-phone mr-2"></i>
+                Hoziroq bog'lanish
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-xl mr-3">
+                        <i class="fas fa-tools text-2xl text-white"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold">TechSupport Pro</span>
+                        <p class="text-gray-400 text-sm">Professional IT Solutions</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 mb-6">Professional IT Support Services - Har doim sizning xizmatingizda</p>
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+                <div class="border-t border-gray-800 pt-6">
+                    <p class="text-gray-500 text-sm">© 2024 TechSupport Pro. Barcha huquqlar himoyalangan.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl animate-slide-up">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Kirish</h2>
+                    <button onclick="closeModal('loginModal')"
+                        class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="loginForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" name="email" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Parol</label>
+                        <input type="password" name="password" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Kirish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div
+                class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl animate-slide-up max-h-screen overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Ro'yxatdan o'tish</h2>
+                    <button onclick="closeModal('registerModal')"
+                        class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="registerForm">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Ism</label>
+                            <input type="text" name="first_name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Familiya</label>
+                            <input type="text" name="last_name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" name="email" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                        <input type="tel" name="phone" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Parol</label>
+                        <input type="password" name="password" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Shaxs turi</label>
+                        <select name="person_type" onchange="toggleCompanyField(this.value)" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                            <option value="">Tanlang</option>
+                            <option value="individual">Jismoniy shaxs</option>
+                            <option value="legal">Yuridik shaxs</option>
+                        </select>
+                    </div>
+                    <div id="companyField" class="mb-4 hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Kompaniya nomi</label>
+                        <input type="text" name="company_name"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                    <div class="mb-6">
+                        <label class="flex items-center">
+                            <input type="checkbox" required
+                                class="mr-3 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Foydalanish shartlariga roziman</span>
+                        </label>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Ro'yxatdan o'tish
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Request Modal -->
+    <div id="quickRequestModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div
+                class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl animate-slide-up max-h-screen overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Tez so'rov yuborish</h2>
+                    <button onclick="closeModal('quickRequestModal')"
+                        class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Step indicator -->
+                <div class="flex items-center justify-center mb-8">
+                    <div class="flex items-center">
+                        <div id="step1Indicator"
+                            class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium shadow-lg">
+                            1</div>
+                        <div class="w-20 h-1 bg-gray-300 mx-3"></div>
+                        <div id="step2Indicator"
+                            class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-medium">
+                            2</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: User Info -->
+                <div id="step1" class="step-content">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-900">Shaxsiy ma'lumotlar</h3>
+                    <form id="userInfoForm">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">To'liq ism</label>
+                            <input type="text" name="full_name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                            <input type="tel" name="phone" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <button type="button" onclick="nextStep()"
+                            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-arrow-right mr-2"></i>
+                            Keyingi qadam
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Step 2: Request Info -->
+                <div id="step2" class="step-content hidden">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-900">So'rov ma'lumotlari</h3>
+                    <form id="requestInfoForm">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Qurilma modeli</label>
+                            <input type="text" name="device_model" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Muammo turi</label>
+                            <select name="issue_type" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                                <option value="">Tanlang</option>
+                                <option value="hardware">Hardware</option>
+                                <option value="software">Software</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Muammo joyi</label>
+                            <input type="text" name="problem_area" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Muammo tavsifi</label>
+                            <textarea name="description" required rows="4"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"></textarea>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Manzil</label>
+                            <input type="text" name="location" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="button" onclick="prevStep()"
+                                class="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-xl hover:bg-gray-400 transition-all duration-300 font-semibold">
+                                <i class="fas fa-arrow-left mr-2"></i>
+                                Orqaga
+                            </button>
+                            <button type="submit"
+                                class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-4 rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                So'rov yuborish
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl hidden z-50 transform transition-all duration-300">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-3 text-xl"></i>
+            <span id="toastMessage" class="font-medium"></span>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
