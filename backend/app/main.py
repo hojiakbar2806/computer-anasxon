@@ -227,6 +227,7 @@ def create_request_with_user(data_in: SupportRequestWithUserCreate):
     parts = full_name.split(' ', 1)
     user_data['first_name'] = parts[0]
     user_data['last_name'] = parts[1] if len(parts) > 1 else ''
+    user_data['role'] = 'user'
 
     user_id, random_password = Users.create(user_data)
     request_data["owner_id"] = ObjectId(user_id)
